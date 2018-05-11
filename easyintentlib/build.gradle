@@ -2,7 +2,7 @@ apply plugin: rootProject.ext.plugins.library
 //这个跟Jcenter一样的插件
 apply plugin: 'com.github.dcendents.android-maven'
 //你的Github用户名替换一下
-group='com.github.jiang-banzhi'
+group = 'com.github.jiang-banzhi'
 android {
     compileSdkVersion 26
 
