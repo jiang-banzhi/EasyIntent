@@ -9,12 +9,11 @@ import android.os.Bundle;
 /**
  * <pre>
  * @author : No.1
- * @time : 2018/5/10.
+ * @time : 201805010.
  * @desciption :
  * @version :
  * </pre>
  */
-
 public class EasyIntent {
     private static final String TAG = "com.banzhi.easyintentlib.tag";
     private Intent intent;
@@ -93,7 +92,7 @@ public class EasyIntent {
 
         public EasyIntent build() {
             if (mActivity == null) {
-                throw new NullPointerException("please check method with() already use！");
+                throw new NullPointerException("please check method with() already use!");
             }
             if (mBundle != null) {
                 mIntent.putExtras(mBundle);

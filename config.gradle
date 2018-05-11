@@ -11,7 +11,7 @@ ext {
             minSdkVersion    : 14,
             targetSdkVersion : 26,
             versionCode      : 1,
-            versionName      : "1.0.0"
+            versionName      : "1.0.1"
     ]
 
     dependencies = [
@@ -22,5 +22,26 @@ ext {
             flexbox     : 'com.google.android:flexbox:0.1.2',
             constraint  : 'com.android.support.constraint:constraint-layout:1.1.0'
 
+    ]
+
+    bintray = [
+            dcendents     : 'com.github.dcendents.android-maven',
+            bintray       : 'com.jfrog.bintray',
+
+            version       : "1.0.1",
+
+            group         : "com.banzhi.easyintent" , // Maven Group ID for the artifact，一般填你唯一的包名
+
+            siteUrl       : 'https://github.com/jiang-banzhi/EasyIntent',   // 项目的主页
+            gitUrl        : 'https://github.com/jiang-banzhi/EasyIntent.git',   // Git仓库的url
+
+            //developer
+            developerId   : 'jiangyang',      //填写的一些基本信息
+            developerName : 'banzhi',
+            developerEmail: 'jy494495991@gmail.com',
+
+            //bintray- pkg
+            bintrayRepo   : "maven",
+            bintrayName   : 'easyIntent',
     ]
 }
