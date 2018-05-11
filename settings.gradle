@@ -1,1 +1,2 @@
 include ':app', ':easyintentlib'
+rootProject.name = 'artifact'
