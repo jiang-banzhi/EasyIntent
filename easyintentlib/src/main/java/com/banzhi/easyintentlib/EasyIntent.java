@@ -38,6 +38,8 @@ public class EasyIntent {
                     .add(proxyFragment, TAG)
                     .commitAllowingStateLoss();
             fragmentManager.executePendingTransactions();
+        }
+        if (proxyFragment != null) {
             proxyFragment.start(intent, requestCode, mCallback);
         }
     }
@@ -52,21 +54,8 @@ public class EasyIntent {
         private Activity mActivity;
         private int requestCode;
         private OnActivityResultCallback mCallback;
-        private Class<?> mClass;
 
-        public Builder toClass(Class<?> clazz) {
-            this.mClass = clazz;
-            return this;
-        }
 
-        public Builder toClass(String className) {
-            try {
-                this.mClass = Class.forName(className);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            return this;
-        }
 
         public Builder putIntent(Intent mIntent) {
             this.mIntent = mIntent;
@@ -97,16 +86,18 @@ public class EasyIntent {
             return this;
         }
 
-        public Builder setmCallback(OnActivityResultCallback mCallback) {
+        public Builder setCallback(OnActivityResultCallback mCallback) {
             this.mCallback = mCallback;
             return this;
         }
 
         public EasyIntent build() {
-            if (mIntent == null) {
-                mIntent = new Intent(mActivity, mClass);
+            if (mActivity == null) {
+                throw new NullPointerException("please check method with() already use！");
             }
-            mIntent.putExtras(mBundle);
+            if (mBundle != null) {
+                mIntent.putExtras(mBundle);
+            }
             return new EasyIntent(mIntent, mActivity, requestCode, mCallback);
         }
     }
