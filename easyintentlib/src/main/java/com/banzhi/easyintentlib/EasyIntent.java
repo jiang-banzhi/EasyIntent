@@ -1,8 +1,8 @@
 package com.banzhi.easyintentlib;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,12 +21,29 @@ public class EasyIntent {
     private int requestCode;
     private OnActivityResultCallback mCallback;
 
-    public EasyIntent(Intent intent, Activity mActivity, int requestCode, OnActivityResultCallback mCallback) {
-        this.intent = intent;
-        this.mActivity = mActivity;
-        this.requestCode = requestCode;
-        this.mCallback = mCallback;
+    private EasyIntent(Builder builder) {
+        this.intent = builder.mIntent;
+        this.mActivity = builder.mActivity;
+        this.requestCode = builder.requestCode;
     }
+
+    public static Builder getBuilder(Activity activity) {
+        return new Builder(activity);
+    }
+
+    public static Builder getBuilder(Fragment fragment) {
+        return new Builder(fragment);
+    }
+
+    public static Builder getBuilder(android.support.v4.app.Fragment fragment) {
+        return new Builder(fragment);
+    }
+
+    public void startForResult(OnActivityResultCallback callback) {
+        this.mCallback = callback;
+        start();
+    }
+
 
     public void start() {
         FragmentManager fragmentManager = mActivity.getFragmentManager();
@@ -52,9 +69,18 @@ public class EasyIntent {
         private Bundle mBundle;
         private Activity mActivity;
         private int requestCode;
-        private OnActivityResultCallback mCallback;
 
+        public Builder(Activity activity) {
+            this.mActivity = activity;
+        }
 
+        public Builder(Fragment fragment) {
+            this.mActivity = fragment.getActivity();
+        }
+
+        public Builder(android.support.v4.app.Fragment fragment) {
+            this.mActivity = fragment.getActivity();
+        }
 
         public Builder putIntent(Intent mIntent) {
             this.mIntent = mIntent;
@@ -66,38 +92,18 @@ public class EasyIntent {
             return this;
         }
 
-        public Builder with(Context context) {
-            if (context instanceof Activity) {
-                this.mActivity = (Activity) context;
-            } else {
-                throw new IllegalArgumentException("the context must instanceof activity");
-            }
-            return this;
-        }
-
-        public Builder with(Activity activity) {
-            this.mActivity = activity;
-            return this;
-        }
 
         public Builder setRequestCode(int requestCode) {
             this.requestCode = requestCode;
             return this;
         }
 
-        public Builder setCallback(OnActivityResultCallback mCallback) {
-            this.mCallback = mCallback;
-            return this;
-        }
 
         public EasyIntent build() {
-            if (mActivity == null) {
-                throw new NullPointerException("please check method with() already use!");
-            }
             if (mBundle != null) {
                 mIntent.putExtras(mBundle);
             }
-            return new EasyIntent(mIntent, mActivity, requestCode, mCallback);
+            return new EasyIntent(this);
         }
     }
 
